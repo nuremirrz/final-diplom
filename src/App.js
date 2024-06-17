@@ -1,24 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import {Router, Routes, Route, TitlePage, MainPage, SignInPage, SignUpPage, TliPage, TsiPage, CalculatorPage, InfoPage, HydrochemicalPage} from './pages'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  return (    
+      <>  
+        <Router>
+          <Routes>
+            <Route path="/" element={<TitlePage />} />
+            <Route path="/main" element={<MainPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/tli" element={<TliPage />} />
+            <Route path="/tsi" element={<TsiPage />} />
+            <Route path="/hydrochem" element={<HydrochemicalPage />} />
+            <Route path="/calculate" element={<CalculatorPage />} />
+            <Route path="/info" element={<InfoPage />} />
+          </Routes>
+        </Router>
+      </>    
   );
 }
 
