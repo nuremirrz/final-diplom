@@ -9,7 +9,7 @@ const Tli = ({selectedYear, selectedDistrict }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${baseURL}/tli/${selectedYear}/${selectedDistrict}`);        
-        console.log(response);
+        // console.log(response);
         const jsonData = await response.json();
         setData(jsonData);
       } catch (error) {

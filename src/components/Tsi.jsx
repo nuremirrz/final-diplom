@@ -10,7 +10,6 @@ const Tsi = ({selectedYear, selectedDistrict }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${baseURL}/tsi/${selectedYear}/${selectedDistrict}`);
-        console.log(response);
         const jsonData = await response.json();
         setData(jsonData);
       } catch (error) {

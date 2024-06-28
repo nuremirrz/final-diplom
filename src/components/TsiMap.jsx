@@ -51,7 +51,6 @@ const TsiMap = ({ selectedYear }) => {
     }
 
     const createCustomIcon = (color) => {
-        console.log("Creating icon with color:", color);
         
         return divIcon({
             className: 'custom-icon',

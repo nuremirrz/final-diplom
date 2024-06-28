@@ -101,7 +101,6 @@ const MainMap = ({ onMarkerClick, selectedYear, selectedOption, selectedSubOptio
     };
 
     const createCustomIcon = (color) => {
-        console.log(color);
         return divIcon({
             className: 'custom-icon', // Стилизуем иконку в CSS
             html: `<svg version="1.0" xmlns="http://www.w3.org/2000/svg"

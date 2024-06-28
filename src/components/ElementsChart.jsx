@@ -29,7 +29,7 @@ const ElementsChart = ({selectedControlPointId, tableField, relatedField, select
           },
           body: JSON.stringify(postData)
         });
-        console.log(postData)
+        // console.log(postData)
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

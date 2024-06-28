@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, Box, IconButton, Toolbar, Typography, Button, Drawer, List, ListItem, ListItemText, Divider, Select, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { baseURL } from '../services/apiConfig';
 import MenuIcon from '@mui/icons-material/Menu';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ManasLogo from '../img/Manas_logo.png';
@@ -11,6 +12,8 @@ const NavBar = ({ selectedYear, onYearChange }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Состояние аутентификации пользователя
   const isMobile = useMediaQuery('(max-width:680px)');
 
+  const linkURL = baseURL.replace('/api', '');
+// console.log(linkURL);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -112,7 +115,7 @@ const NavBar = ({ selectedYear, onYearChange }) => {
                 <Button onClick={handleLogout}>Logout</Button>
               ) : (
                 <Button>
-                  <Link to='https://5eaa-178-217-174-2.ngrok-free.app/auth/operator/login' target='_blank' style={defaultStyleForLink}>Login</Link>
+                  <Link to={`${linkURL}/auth/operator/login`} target='_blank' style={defaultStyleForLink}>Login</Link>
                 </Button>
               )}
             </>
@@ -156,7 +159,7 @@ const NavBar = ({ selectedYear, onYearChange }) => {
               </ListItem>
             ) : (
               <ListItem button>
-                <ListItemText primary={<Link to='https://5eaa-178-217-174-2.ngrok-free.app/auth/operator/login' target='_blank' style={defaultStyleForLink}>Login</Link>} />
+                <ListItemText primary={<Link to={`${linkURL}/auth/operator/login`} target='_blank' style={defaultStyleForLink}>Login</Link>} />
               </ListItem>
             )}
           </List>

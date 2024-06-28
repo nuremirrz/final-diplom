@@ -1,4 +1,4 @@
-export const baseURL = 'https://5eaa-178-217-174-2.ngrok-free.app/api';
+export const baseURL = 'https://6203-178-217-174-2.ngrok-free.app/api';
 
 export const apiEndpoints = {
   controlPoints: '/get/control_points',
