@@ -53,7 +53,7 @@ const TliMap = ({ selectedYear }) => {
         return divIcon({
             className: 'custom-icon',
             html: `<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-            width="15.000000pt" height="15.000000pt" viewBox="0 0 712.000000 712.000000"
+            width="25.000000pt" height="25.000000pt" viewBox="0 0 712.000000 712.000000"
             preserveAspectRatio="xMidYMid meet">
            
            <g transform="translate(-90.000000,512.000000) scale(0.100000,-0.100000)"

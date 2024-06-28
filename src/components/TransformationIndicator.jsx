@@ -56,7 +56,7 @@ const LineChart = ({ data, selectedYear }) => {
         categories: distances,
       },
       yaxis: {
-        title: { text: 'Area (m²)' },
+        title: { text: 'Area (ha)' },
       },
     },
   };
