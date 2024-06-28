@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
+import { baseURL } from '../services/apiConfig';
 
 const CalculateChart = ({ selectedYear, selectedDistrict, cost }) => {
     const [response, setResponse] = useState(null);
@@ -14,7 +15,7 @@ const CalculateChart = ({ selectedYear, selectedDistrict, cost }) => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch('http://80.72.180.130:8581/api/calculate/horizontal/buffer/zone', {
+                const response = await fetch(`${baseURL}/calculate/horizontal/buffer/zone`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

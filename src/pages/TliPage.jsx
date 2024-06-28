@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar'
 import DistAndYearChooser from '../components/DistAndYearChooser';
 import Tli from '../components/Tli';
 import TliAverage from '../components/TliAverage';
+import TliTable from '../components/TliTable';
+import TliMap from '../components/TliMap';
 
 const TliPage = () => {
   const [selectedYear, setSelectedYear] = useState(2022);
@@ -39,6 +41,12 @@ const TliPage = () => {
         selectedYear={selectedYear}
         selectedDistrict={selectedDistrict}
         />
+      </div>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <TliMap      
+        selectedYear={selectedYear}
+      />
+      <TliTable/>
       </div>
     </>
   )

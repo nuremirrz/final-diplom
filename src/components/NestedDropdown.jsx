@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { baseURL } from '../services/apiConfig';
 
 const NestedDropdown = ({ onOptionChange, onSubOptionChange }) => {
   const [options, setOptions] = useState([]);
@@ -12,7 +13,7 @@ const NestedDropdown = ({ onOptionChange, onSubOptionChange }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://80.72.180.130:8581/api/report/get/fields');
+        const response = await axios.get(`${baseURL}/report/get/fields`);
         setOptions(response.data.data);
         setLoading(false);
       } catch (error) {

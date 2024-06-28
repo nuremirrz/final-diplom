@@ -1,4 +1,4 @@
-export const baseURL = 'http://80.72.180.130:8581/api';
+export const baseURL = 'https://5eaa-178-217-174-2.ngrok-free.app/api';
 
 export const apiEndpoints = {
   controlPoints: '/get/control_points',

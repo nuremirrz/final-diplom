@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { baseURL } from '../services/apiConfig';
 
 const TliAverage = ({selectedYear, selectedDistrict }) => {
   const [data, setData] = useState(null);
@@ -7,7 +8,7 @@ const TliAverage = ({selectedYear, selectedDistrict }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://80.72.180.130:8581/api/tli/${selectedYear}/${selectedDistrict}`);
+        const response = await fetch(`${baseURL}/tli/${selectedYear}/${selectedDistrict}`);
         const jsonData = await response.json();
         setData(jsonData);
       } catch (error) {

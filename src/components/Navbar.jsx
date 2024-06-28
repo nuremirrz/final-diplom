@@ -112,7 +112,7 @@ const NavBar = ({ selectedYear, onYearChange }) => {
                 <Button onClick={handleLogout}>Logout</Button>
               ) : (
                 <Button>
-                  <Link to='http://80.72.180.130:8581/auth/operator/login' target='_blank' style={defaultStyleForLink}>Login</Link>
+                  <Link to='https://5eaa-178-217-174-2.ngrok-free.app/auth/operator/login' target='_blank' style={defaultStyleForLink}>Login</Link>
                 </Button>
               )}
             </>
@@ -156,7 +156,7 @@ const NavBar = ({ selectedYear, onYearChange }) => {
               </ListItem>
             ) : (
               <ListItem button>
-                <ListItemText primary={<Link to='http://80.72.180.130:8581/auth/operator/login' target='_blank' style={defaultStyleForLink}>Login</Link>} />
+                <ListItemText primary={<Link to='https://5eaa-178-217-174-2.ngrok-free.app/auth/operator/login' target='_blank' style={defaultStyleForLink}>Login</Link>} />
               </ListItem>
             )}
           </List>

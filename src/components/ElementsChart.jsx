@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
+import { baseURL } from '../services/apiConfig';
 
 const ElementsChart = ({selectedControlPointId, tableField, relatedField, selectedOption, selectedSubOption}) => {
   const [response, setResponse] = useState(null);
@@ -21,7 +22,7 @@ const ElementsChart = ({selectedControlPointId, tableField, relatedField, select
         }
 
         // Отправляем запрос на сервер
-        const response = await fetch('http://80.72.180.130:8581/api/report/get/point/report', {
+        const response = await fetch(`${baseURL}/report/get/point/report`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

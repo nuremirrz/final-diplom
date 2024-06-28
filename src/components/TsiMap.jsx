@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import "../App.css";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Tooltip } from 'react-leaflet';
-import { divIcon } from 'leaflet'; // Импортируем divIcon
-import { apiEndpoints, baseURL } from '../services/apiConfig';
+import { divIcon } from 'leaflet';
+import { baseURL } from '../services/apiConfig';
 
-const MainMap = ({ onMarkerClick, selectedYear, selectedOption, selectedSubOption, tableField, relatedField }) => {
+const TsiMap = ({ selectedYear }) => {
     const [markersData, setMarkersData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
-                const apiUrl = `${baseURL}${apiEndpoints.controlPoints}`;
+                const apiUrl = `${baseURL}/tsi/for/points/${selectedYear}`;
                 const response = await fetch(apiUrl);
                 if (!response.ok) {
                     throw new Error(`Ошибка HTTP: ${response.status}`);
@@ -28,7 +29,8 @@ const MainMap = ({ onMarkerClick, selectedYear, selectedOption, selectedSubOptio
                     ],
                     popUp: item.name,
                     color: item.color,
-                }));                
+                }));
+         
                 setMarkersData(transformedData);
             } catch (error) {
                 setError(error.message);
@@ -38,55 +40,7 @@ const MainMap = ({ onMarkerClick, selectedYear, selectedOption, selectedSubOptio
         };
 
         fetchData();
-    }, []);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const postData = {
-                    year: selectedYear,
-                    table_field: tableField
-                };
-
-                if (selectedSubOption) {
-                    postData.children = selectedSubOption.id;
-                    postData.related_field = relatedField;
-                }
-
-                const response = await fetch(`${baseURL}/get/control_points/withPdk`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(postData)
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const responseData = await response.json();
-
-                setMarkersData(prevMarkersData => prevMarkersData.map(marker => {
-                    const updatedMarker = responseData.data.find(dataMarker => dataMarker.id === marker.id);
-                    if (updatedMarker) {
-                        return {
-                            ...marker,
-                            color: updatedMarker.color
-                        };
-                    }
-                    return marker;
-                }));
-
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [selectedYear, selectedOption, selectedSubOption, tableField, relatedField]);
+    }, [selectedYear]);
 
     if (loading) {
         return <p>Загрузка данных...</p>;
@@ -96,14 +50,11 @@ const MainMap = ({ onMarkerClick, selectedYear, selectedOption, selectedSubOptio
         return <p>Произошла ошибка: {error}</p>;
     }
 
-    const handleMarkerClick = (id) => {
-        onMarkerClick(id);
-    };
-
     const createCustomIcon = (color) => {
-        console.log(color);
+        console.log("Creating icon with color:", color);
+        
         return divIcon({
-            className: 'custom-icon', // Стилизуем иконку в CSS
+            className: 'custom-icon',
             html: `<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
             width="15.000000pt" height="15.000000pt" viewBox="0 0 712.000000 712.000000"
             preserveAspectRatio="xMidYMid meet">
@@ -121,7 +72,9 @@ const MainMap = ({ onMarkerClick, selectedYear, selectedOption, selectedSubOptio
            <path d="M2405 3551 c-203 -58 -368 -229 -416 -431 -19 -77 -16 -213 5 -285
            57 -194 207 -350 391 -408 98 -31 251 -31 352 1 183 57 332 213 389 408 21 72
            23 208 5 284 -49 206 -221 381 -427 434 -81 21 -222 20 -299 -3z"/>
-           </g>`
+           </g>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
         });
     };
 
@@ -133,19 +86,19 @@ const MainMap = ({ onMarkerClick, selectedYear, selectedOption, selectedSubOptio
                     url="https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
                 />
                 
-                {markersData.map((marker, index) => {
-                    if (marker.geocode[0] === null || marker.geocode[1] === null) {
+                {markersData.map((marker) => {
+                    const [lat, lng] = marker.geocode;
+                    
+                    if (lat === 0 || lng === 0 || isNaN(lat) || isNaN(lng)) {
+                        console.log(`Invalid coordinates for marker ID ${marker.id}:`, marker.geocode);
                         return null;
                     }
 
                     return (
                         <Marker
-                            key={`${marker.id}-${marker.color}`} // Уникальный ключ для каждого маркера
+                            key={marker.id}
                             position={marker.geocode}
                             icon={createCustomIcon(marker.color)} 
-                            eventHandlers={{
-                                mouseover: () => handleMarkerClick(marker.id)
-                            }}
                         >
                             <Tooltip direction="top" offset={[0, -20]} opacity={1} permanent>
                                 {marker.popUp}
@@ -154,16 +107,9 @@ const MainMap = ({ onMarkerClick, selectedYear, selectedOption, selectedSubOptio
                     );
                 })}
 
-            </MapContainer>
-            <h3>Обозначение маркировок:</h3>
-            <div style={{display: 'flex'}}>
-                <div className="image-container" style={{backgroundImage: `url('./img/placeholder.svg')`, backgroundColor: '#000',paddingLeft: '10px'}}>Нет информации</div>
-                <div className="image-container" style={{backgroundImage: `url('./img/placeholder.svg')`, backgroundColor: '#32CD32',paddingLeft: '10px'}}>  Нормально</div>
-                <div className="image-container" style={{backgroundImage: `url('./img/placeholder.svg')`, backgroundColor: '#FFFF00',paddingLeft: '10px'}}>  Предупреждение</div>
-                <div className="image-container" style={{backgroundImage: `url('./img/placeholder.svg')`, backgroundColor: '#ff0000',paddingLeft: '10px'}}>  Опасность</div>
-            </div>
+            </MapContainer>            
         </div>
     );
 };
 
-export default MainMap;
+export default TsiMap;

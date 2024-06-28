@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar'
 import DistAndYearChooser from '../components/DistAndYearChooser'
 import Tsi from '../components/Tsi'
 import TsiAverage from '../components/TsiAverage';
+import TsiTable from '../components/TsiTable';
+import TsiMap from '../components/TsiMap';
 
 const TsiPage = () => {
     const [selectedYear, setSelectedYear] = useState(2022);
@@ -28,7 +30,7 @@ const TsiPage = () => {
                 selectedDistrict={selectedDistrict}
                 onDistrictChange={handleDistrictChange}
             />
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', margin: '0 40px', gap: '30px'}}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', margin: '0 40px', gap: '30px' }}>
                 <Tsi
                     selectedYear={selectedYear}
                     selectedDistrict={selectedDistrict}
@@ -39,6 +41,13 @@ const TsiPage = () => {
                     selectedDistrict={selectedDistrict}
                 />
             </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <TsiMap
+                    selectedYear={selectedYear}
+                />
+                <TsiTable />
+            </div>
+
         </>
     )
 }
